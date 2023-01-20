@@ -1,6 +1,6 @@
 # vet-appointments-manager 
 
-This is a solution to the [Interactive rating component challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/interactive-rating-component-koxpeBUmI).
+This is a solution to the [Appointmet Manager Project from the Javascript course by Codigo Con Juan](https://www.frontendmentor.io/challenges/interactive-rating-component-koxpeBUmI).
 
 ## Table of contents
 
@@ -8,8 +8,7 @@ This is a solution to the [Interactive rating component challenge on Frontend Me
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
   - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
+ 
 
 ## Overview
 
