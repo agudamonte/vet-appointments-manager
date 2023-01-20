@@ -14,7 +14,7 @@ This is a solution to the [Appointmet Manager Project from the Javascript course
 
 ### Screenshot
 
-![](/images/Screenshot2.jpg)
+![](/images/Screenshot2.png)
 
 ### Links
 
