@@ -21,16 +21,23 @@ class Citas {
 
     addAppointment(cita) {
         this.citas = [...this.citas, cita];
+        this.syncStorage(this.citas);
     }
 
     deleteAppointment(id) {
         this.citas = this.citas.filter((cita) => cita.id !== id);
+        localStorage.setItem("appointments", JSON.stringify(this.citas));
     }
 
     editApppointment(citaUpdated) {
         this.citas = this.citas.map((cita) =>
             cita.id === citaUpdated.id ? citaUpdated : cita
         );
+        localStorage.setItem("appointments", JSON.stringify(this.citas));
+    }
+
+    syncStorage() {
+        localStorage.setItem("appointments", JSON.stringify(this.citas));
     }
 }
 
@@ -72,7 +79,7 @@ class UI {
         }, 2000);
     }
 
-    printAppointments({ citas }) {
+    printAppointments(citas) {
         // primero borrar lo que ya este alli
         this.cleanAppointmentsHTML();
 
@@ -170,9 +177,17 @@ class UI {
 
 const administrarCitas = new Citas();
 const ui = new UI();
+let appointments = [];
 
 eventListeners();
 function eventListeners() {
+    //print the appointments in the window
+    document.addEventListener("DOMContentLoaded", () => {
+        appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+        ui.printAppointments(appointments);
+        administrarCitas.citas = appointments;
+    });
+
     petNameInput.addEventListener("change", datosCita);
     petOwnerInput.addEventListener("change", datosCita);
     telephoneInput.addEventListener("change", datosCita);
@@ -237,13 +252,14 @@ function newAppointment(e) {
         administrarCitas.addAppointment({ ...citaObj });
         // imprimir alerta correcta
         ui.printAlert(`Cita creada correctamente`, "success");
+        syncStorage();
     }
 
     // Reset the object that saves the appointment details
     resetObject();
 
     // print HTML
-    ui.printAppointments(administrarCitas);
+    ui.printAppointments(administrarCitas.citas);
 
     // reset the form
     appointmentForm.reset();
@@ -259,7 +275,7 @@ function eliminarCita(id) {
     // Elimina la cita del array en el Objeto
     administrarCitas.deleteAppointment(id);
     // Limpia la cita desde el HTML
-    ui.printAppointments(administrarCitas);
+    ui.printAppointments(administrarCitas.citas);
     //Muestra el mensaje de eliminado correctamente
     ui.printAlert(`Eliminado correctamente`, "success");
 }
@@ -291,4 +307,8 @@ function cargarEdicion(cita) {
     ).textContent = `Guardar Cambios`;
 
     editando = true;
+}
+
+function syncStorage(appointments) {
+    administrarCitas.syncStorage(appointments);
 }
